@@ -1,10 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Navbar from '../components/Navbar';
 // import './Home.css';  // Import the CSS file
 
 function Home() {
-  return (
+  return ( 
     <div>
+      <Navbar/>
       <h1>Welcome to the Fitness Planner App</h1>
       <p>Please choose an option below:</p>
       <Link to="/login">
