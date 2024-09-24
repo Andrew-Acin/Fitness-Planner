@@ -1,17 +1,26 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
 const authRoutes = require('./routes/authRoutes');
 const cors = require('cors');
+const { Sequelize } = require('sequelize');
+
+// Connect to database
+const sequelize = new Sequelize('fitness_planner', 'user_id', 'first_name', 'last_name' ,'username', 'password', {
+  host: 'localhost',
+  dialect: 'postgres'
+});
 
 const app = express();
 const port = 5000;
 
-// Connect to database
-mongoose.connect('mongodb://localhost:27017/fitness-planner', { 
-  useNewUrlParser: true, 
-  useUnifiedTopology: true 
-});
+// Test Sequelize connection
+sequelize.authenticate()
+  .then(() => {
+    console.log('Sequelize connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
 
 // Apply CORS middleware before routes
 app.use(cors());
