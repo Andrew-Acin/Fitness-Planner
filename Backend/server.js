@@ -3,11 +3,12 @@ const bodyParser = require('body-parser');
 const authRoutes = require('./routes/authRoutes');
 const cors = require('cors');
 const { Sequelize } = require('sequelize');
+require('dotenv').config(); // Load environment variables from .env
 
-// Connect to database
-const sequelize = new Sequelize('fitness_planner', 'user_id', 'first_name', 'last_name' ,'username', 'password', {
-  host: 'localhost',
-  dialect: 'postgres'
+// Connect to database using environment variables
+const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
+  host: process.env.DB_HOST,
+  dialect: process.env.DB_DIALECT
 });
 
 const app = express();
