@@ -27,9 +27,15 @@ fs
     );
   })
   .forEach(file => {
-    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
-    db[model.name] = model;
+    try {
+      const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
+      db[model.name] = model;
+      console.log(`Loaded model: ${model.name}`); // Log model loading
+    } catch (error) {
+      console.error(`Failed to load model from file: ${file}`, error);
+    }
   });
+
 
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
@@ -39,5 +45,6 @@ Object.keys(db).forEach(modelName => {
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
+
 
 module.exports = db;
