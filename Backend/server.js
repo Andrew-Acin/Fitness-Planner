@@ -22,6 +22,26 @@ sequelize.authenticate()
     console.error('Unable to connect to the database:', err);
   });
 
+// API Ninjas fecth requests frpm here to frontend SearchExercise.js
+app.get('/api/exercise', async(req, res) => {
+  const apiKey = process.env.API_NINJAS_KEY;
+  const apiUrl = 'https://api.api-ninjas.com/v1/exercises?muscle' + muscle;
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'GET',
+      headers: 'X-Api-Key: apiKey'
+      
+    });
+
+    const data = await response.json()
+    res.json(data)
+  } catch (error) {
+    console.error('Error fetching exercise:', error)
+    res.status(500).json({ error: 'Unable to fetch data'})
+  }
+})
+
 // Apply CORS middleware before routes
 app.use(cors());
 

@@ -3,39 +3,39 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
+  class Template extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Template.belongsTo(models.User, { foreignKey: 'created_by' });
     }
   }
-  User.init({
+  Template.init({
     id: {
-      type: DataTypes.INTEGER,
+      type:DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true
     },
-    first_name: {
-      type: DataTypes.STRING,
+    name: {
+      type:DataTypes.STRING,
       allowNull: false
     },
-    last_name: {
-      type: DataTypes.STRING,
-      allowNull: false
+    created_by: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'users', // Name of the referenced model (users)
+        key: 'id', // Key in the referenced model
+      }
     },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false
-    }
   }, {
     sequelize,
-    modelName: 'User',
-    tableName: 'user',
+    modelName: 'Template',
+    tableName: 'template',
     timestamps: false
   });
-  return User;
+  return Template;
 };
