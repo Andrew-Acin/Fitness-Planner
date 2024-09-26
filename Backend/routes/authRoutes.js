@@ -6,33 +6,33 @@ const { User } = require('../models'); // Adjust the path as needed
 const router = express.Router();
 
 // Secret key for signing tokens (store this in .env for security)
-const SECRET_KEY = process.env.JWT_SECRET || 'your-secret-key';
+// const SECRET_KEY = process.env.JWT_SECRET || 'your-secret-key';
+const SECRET_KEY = process.env.SECRET_KEY; // Access the secret key from the environment variable
+
 
 // Signup Route
 router.post('/signup', async (req, res) => {
   const { first_name, last_name, email, password } = req.body;
 
   try {
-    // Check if the user already exists
-    const existingUser = await User.findOne({ where: { email } });
-    if (existingUser) {
-      return res.status(400).json({ message: 'User already exists' });
+    // Validate input data
+    if (!first_name || !last_name || !email || !password) {
+      return res.status(400).json({ message: 'All fields are required.' });
     }
 
-    // Hash the password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    // Check if the email is already in use
+    const existingUser = await User.findOne({ where: { email } });
+    if (existingUser) {
+      return res.status(400).json({ message: 'Email already in use.' });
+    }
 
-    // Create a new user
-    const newUser = await User.create({
-      first_name,
-      last_name,
-      email,
-      password: hashedPassword,
-    });
+    // Hash password and create user in database
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = await User.create({ first_name, last_name, email, password: hashedPassword });
 
     // Generate JWT
-    const token = jwt.sign({ id: newUser.user_id, email: newUser.email }, SECRET_KEY, {
-      expiresIn: '1h', // Token expires in 1 hour
+    const token = jwt.sign({ id: newUser.user_id, email: newUser.email }, process.env.SECRET_KEY, {
+      expiresIn: '1h',
     });
 
     res.status(201).json({ token });
@@ -41,6 +41,7 @@ router.post('/signup', async (req, res) => {
     res.status(500).json({ message: 'Error creating user' });
   }
 });
+
 
 // Login Route
 router.post('/login', async (req, res) => {

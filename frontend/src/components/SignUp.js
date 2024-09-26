@@ -16,7 +16,7 @@ const SignUp = () => {
         },
         body: JSON.stringify({ first_name, last_name, email, password }),
       });
-
+  
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem('token', data.token); // Store the JWT token
@@ -24,14 +24,15 @@ const SignUp = () => {
         alert('Signup successful!');
       } else {
         const errorData = await response.json();
-        console.error('Error:', errorData.message);
-        alert('Signup failed: ' + errorData.message);
+        console.error('Error:', errorData); // Log the entire error response
+        alert('Signup failed: ' + (errorData.message || 'An error occurred'));
       }
     } catch (error) {
       console.error('Error:', error);
       alert('Signup failed. Please try again.');
     }
   };
+  
 
   return (
     <div>
