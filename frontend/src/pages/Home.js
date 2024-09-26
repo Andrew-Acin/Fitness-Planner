@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Banner from '../components/Banner';
+import SearchExcersises from '../components/SearchExcersises';
 // import './Home.css';  // Import the CSS file
 
 function Home() {
@@ -9,6 +10,7 @@ function Home() {
     <div>
       <Navbar/>
       <Banner/>
+      <SearchExcersises/>
       <h1>Welcome to the Fitness Planner App</h1>
       <p>Please choose an option below:</p>
       <Link to="/login">
