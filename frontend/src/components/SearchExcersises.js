@@ -51,10 +51,32 @@ const SearchExercises = () => {
     });
   };
 
-  // Function to save selected exercises (e.g., to local storage or send to a backend)
-  const saveSelectedExercises = () => {
-    // Placeholder for saving logic (localStorage, API, etc.)
-    console.log('Selected exercises saved:', selectedExercises);
+  // Function to save selected exercises to the backend
+  const saveSelectedExercises = async () => {
+    if (selectedExercises.length === 0) {
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:5000/api/exercises', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ exercises: selectedExercises }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to save exercises');
+      }
+
+      const result = await response.json();
+      console.log('Selected exercises saved:', result);
+      alert('Exercises saved successfully!');
+    } catch (error) {
+      console.error('Error saving exercises:', error);
+      alert('Failed to save exercises');
+    }
   };
 
   return (
@@ -109,5 +131,6 @@ const SearchExercises = () => {
 };
 
 export default SearchExercises;
+
 
 

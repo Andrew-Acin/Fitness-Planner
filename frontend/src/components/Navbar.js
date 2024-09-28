@@ -47,7 +47,7 @@ const Navbar = () => {
             color: '#FFD700'
           }}
         >
-          Exercises
+          Workouts
         </a>
 
         <Link 
