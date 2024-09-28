@@ -1,6 +1,6 @@
 //handles log in/sign up logic
 
-const User = require('../models/userModel');
+const User = require('../models/user');
 
 exports.signup = async (req, res) => {
   const { email, password } = req.body;
