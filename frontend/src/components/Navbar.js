@@ -22,7 +22,7 @@ const Navbar = () => {
           }} 
         />
       </Link>
-
+{/* comment for commit */}
       <Stack
         direction="row"
         gap="40px"
