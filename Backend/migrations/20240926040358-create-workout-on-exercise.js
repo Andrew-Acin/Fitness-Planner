@@ -10,11 +10,25 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       workout_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Workouts',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       exercise_id: {
-        type: Sequelize.INTEGER
-      }
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Exercises', 
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      },
     });
   },
   async down(queryInterface, Sequelize) {

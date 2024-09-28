@@ -2,19 +2,15 @@
 const {
   Model
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class WorkoutOnExercise extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
       WorkoutOnExercise.belongsTo(models.Workout, { foreignKey: 'workout_id' });
-      
       WorkoutOnExercise.belongsTo(models.Exercise, { foreignKey: 'exercise_id' });
     }
   }
+  
   WorkoutOnExercise.init({
     id: {
       type: DataTypes.INTEGER,
@@ -22,24 +18,25 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true
     },
     workout_id: {
-      type:DataTypes.INTEGER,
+      type: DataTypes.INTEGER,
       references: {
-        model: 'workout', // Name of the referenced model (workout)
-        key: 'id', // Key in the referenced model
+        model: 'Workouts', // Match migration name
+        key: 'id',
       }
     },
     exercise_id: {
-      type:DataTypes.INTEGER,
+      type: DataTypes.INTEGER,
       references: {
-        model: 'exercise', // Name of the referenced model (exercise)
-        key: 'id', // Key in the referenced model
+        model: 'Exercises', // Match migration name
+        key: 'id',
       }
     }
   }, {
     sequelize,
     modelName: 'WorkoutOnExercise',
-    tableName: 'workout_on_exercise',
+    tableName: 'workout_on_exercises',
     timestamps: false
   });
+  
   return WorkoutOnExercise;
 };
