@@ -1,28 +1,33 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Stack } from '@mui/material';
 import Logo from '../assets/images/Logo.png';
 
 const Navbar = () => {
+  const navigate = useNavigate(); // Use useNavigate instead of useHistory
+
+  const handleLogout = () => {
+    // Remove token from local storage
+    localStorage.removeItem('token');
+    // Redirect to home or login page
+    navigate('/'); // Use navigate to redirect
+  };
+
   return (
     <Stack 
       direction="row"
       justifyContent="space-between"
       alignItems="center"
-      px={2} // Padding on the X axis for spacing
+      px={2}
     >
       <Link to="/">
         <img 
           src={Logo} 
           alt="logo" 
-          style={{
-            width: '48px', 
-            height: '48px', 
-            margin: '0 20px'
-          }} 
+          style={{ width: '48px', height: '48px', margin: '0 20px' }} 
         />
       </Link>
-{/* comment for commit */}
+
       <Stack
         direction="row"
         gap="40px"
@@ -59,6 +64,20 @@ const Navbar = () => {
         >
           Calendar
         </Link>
+
+        {/* Logout Button */}
+        <button 
+          onClick={handleLogout} 
+          style={{
+            background: 'none',
+            border: 'none',
+            color: '#FFD700',
+            cursor: 'pointer',
+            fontSize: '24px'
+          }}
+        >
+          Logout
+        </button>
       </Stack>
     </Stack>
   );

@@ -65,7 +65,8 @@ router.post('/login', async (req, res) => {
       expiresIn: '1h',
     });
 
-    res.json({ token });
+     // Send back the token and first name
+     res.status(200).json({ token, first_name: user.first_name }); // Include first_name here
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error logging in' });

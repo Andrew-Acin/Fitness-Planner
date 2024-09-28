@@ -16,12 +16,15 @@ const SignUp = () => {
         },
         body: JSON.stringify({ first_name, last_name, email, password }),
       });
-  
+
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem('token', data.token); // Store the JWT token
+        localStorage.setItem('first_name', first_name); // Store the first name
         // Redirect user or update UI after successful signup
         alert('Signup successful!');
+        // Redirect user to the calendar page after successful signup
+        window.location.href = '/'; 
       } else {
         const errorData = await response.json();
         console.error('Error:', errorData); // Log the entire error response
@@ -32,7 +35,7 @@ const SignUp = () => {
       alert('Signup failed. Please try again.');
     }
   };
-  
+
 
   return (
     <div>

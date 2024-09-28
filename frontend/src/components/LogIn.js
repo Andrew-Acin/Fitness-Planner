@@ -18,8 +18,10 @@ const Login = () => {
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem('token', data.token); // Store the JWT token
+        localStorage.setItem('first_name', data.first_name); // Store the first name from response
         // Redirect user or update UI after successful login
         alert('Login successful!');
+        window.location.href = '/'; 
       } else {
         const errorData = await response.json();
         console.error('Error:', errorData.message);
