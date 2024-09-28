@@ -4,29 +4,24 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Exercise extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      // Define association here if needed
     }
   }
   Exercise.init({
     id: {
-      type:DataTypes.INTEGER,
+      type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true
     },
     name: {
-      type:DataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: false
     }
   }, {
     sequelize,
-    modelName: 'Exercise',
-    tableName: 'exercise',
+    modelName: 'Exercise', // This should match your references
+    tableName: 'Exercises', // Ensure this matches the migration
     timestamps: false
   });
   return Exercise;

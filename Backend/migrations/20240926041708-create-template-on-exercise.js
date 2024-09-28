@@ -1,23 +1,38 @@
 'use strict';
-/** @type {import('sequelize-cli').Migration} */
+
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('TemplateOnExercises', {
+  up: async (queryInterface, Sequelize) => {
+    await queryInterface.createTable('template_on_exercises', {
       id: {
-        allowNull: false,
-        autoIncrement: true,
+        type: Sequelize.INTEGER,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        autoIncrement: true,
+        allowNull: false,
       },
       template_id: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Templates', 
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
       exercise_id: {
-        type: Sequelize.INTEGER
-      }
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'Exercises', // Ensure casing is consistent
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      },
     });
   },
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('TemplateOnExercises');
+
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.dropTable('template_on_exercises');
   }
 };

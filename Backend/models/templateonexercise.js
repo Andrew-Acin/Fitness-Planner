@@ -11,7 +11,6 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       TemplateOnExercise.belongsTo(models.Template, { foreignKey: 'template_id' });
-
       TemplateOnExercise.belongsTo(models.Exercise, { foreignKey: 'exercise_id' });
     }
   }
