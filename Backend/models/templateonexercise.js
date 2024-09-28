@@ -10,9 +10,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      WorkoutOnExercise.belongsTo(models.Template, { foreignKey: 'template_id' });
+      TemplateOnExercise.belongsTo(models.Template, { foreignKey: 'template_id' });
 
-      WorkoutOnExercise.belongsTo(models.Exercise, { foreignKey: 'exercise_id' });
+      TemplateOnExercise.belongsTo(models.Exercise, { foreignKey: 'exercise_id' });
     }
   }
   TemplateOnExercise.init({
