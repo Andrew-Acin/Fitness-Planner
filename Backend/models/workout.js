@@ -6,6 +6,12 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // Define association to User model
       Workout.belongsTo(models.User, { foreignKey: 'created_by' });
+
+      Workout.belongsToMany(models.Exercise, {
+        through: 'WorkoutExercises', // This table will store workout-exercise relations
+        foreignKey: 'workoutId',
+        otherKey: 'exerciseId'
+    });
     }
   }
 
@@ -50,7 +56,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Workout',
-    tableName: 'workout',
+    tableName: 'Workouts',
     timestamps: false
   });
 

@@ -4,6 +4,7 @@ const authRoutes = require('./routes/authRoutes');
 const cors = require('cors');
 const { Sequelize } = require('sequelize');
 require('dotenv').config(); // Load environment variables from .env
+const { Workout, Exercise, WorkoutOnExercise } = require('./models');
 
 // Connect to database using environment variables
 const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
@@ -42,6 +43,45 @@ app.get('/api/exercise', async(req, res) => {
     res.status(500).json({ error: 'Unable to fetch data'})
   }
 })
+
+app.use(bodyParser.json()); 
+
+app.post('/api/Workouts', async (req, res) => {
+  const { name, type, muscle, equipment, difficulty, instructions, exercises } = req.body;
+
+  try {
+    // Create a new workout
+    const newWorkout = await Workout.create({
+      name,
+      type,
+      muscle,
+      equipment,
+      difficulty,
+      instructions,
+      created_by: 1 // Use the logged-in user's ID in a real app
+    });
+
+    // Link the selected exercises to the new workout
+    if (exercises && exercises.length > 0) {
+  const workoutExerciseLinks = exercises
+    .map(ex => ({
+      workout_id: newWorkout.id,
+      exercise_id: ex.id  
+    }));
+
+  if (workoutExerciseLinks.length > 0) {
+    await WorkoutOnExercise.bulkCreate(workoutExerciseLinks); 
+  }
+}
+
+
+    res.status(201).json({ message: 'Workout and exercises saved successfully' });
+  } catch (error) {
+    console.error('Error saving workout and exercises:', error);
+    res.status(500).json({ error: 'Failed to save workout and exercises' });
+  }
+});
+
 
 // Apply CORS middleware before routes
 app.use(cors());

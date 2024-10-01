@@ -34,7 +34,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'WorkoutOnExercise',
-    tableName: 'workout_on_exercises',
+    tableName: 'WorkoutOnExercises',
     timestamps: false
   });
   
