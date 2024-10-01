@@ -1,8 +1,11 @@
 import React from 'react'
+import WorkoutCalendar from '../components/WorkoutCalendar'
 
 const Calendar = () => {
   return (
-    <div>Calendar</div>
+    <div>
+      <WorkoutCalendar/>
+    </div>
   )
 }
 
