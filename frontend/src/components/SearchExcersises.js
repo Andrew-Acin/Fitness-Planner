@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './ExcerciseStyles.css'; 
+import "./ExcerciseStyles.css"
 
 const SearchExercises = () => {
   const [query, setQuery] = useState(''); // State to track the search input
