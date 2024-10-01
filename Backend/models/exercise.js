@@ -5,7 +5,11 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Exercise extends Model {
     static associate(models) {
-      // Define association here if needed
+      Exercise.belongsToMany(models.Workout, {
+        through: 'WorkoutExercises',
+        foreignKey: 'exerciseId',
+        otherKey: 'workoutId'
+      });
     }
   }
   Exercise.init({
@@ -20,8 +24,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'Exercise', // This should match your references
-    tableName: 'Exercises', // Ensure this matches the migration
+    modelName: 'Exercise', 
+    tableName: 'Exercises', 
     timestamps: false
   });
   return Exercise;
