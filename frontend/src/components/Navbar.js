@@ -14,67 +14,34 @@ const Navbar = () => {
   };
 
   return (
-    <Stack 
-      direction="row"
-      justifyContent="space-between"
-      alignItems="center"
-      px={2}
-    >
+    <Stack>
       <Link to="/">
         <img 
           src={Logo} 
           alt="logo" 
-          style={{ width: '48px', height: '48px', margin: '0 20px' }} 
+          style={{ width: '48px', height: '48px' }} 
         />
       </Link>
 
-      <Stack
-        direction="row"
-        gap="40px"
-        fontSize="24px"
-        alignItems="flex-end"
-      >
+      <Stack>
         <Link 
           to="/" 
-          style={{
-            textDecoration: 'none', 
-            color: '#FFD700', 
-            borderBottom: '3px solid #FFD700'
-          }}
         >
           Home
         </Link> 
 
         <a 
-          href="#exercises" 
-          style={{
-            textDecoration: 'none', 
-            color: '#FFD700'
-          }}
-        >
+          href="#exercises">
           Workouts
         </a>
 
-        <Link 
-          to="/calendar" 
-          style={{
-            textDecoration: 'none', 
-            color: '#FFD700'
-          }}
-        >
+        <Link to="/calendar">
           Calendar
         </Link>
 
         {/* Logout Button */}
         <button 
           onClick={handleLogout} 
-          style={{
-            background: 'none',
-            border: 'none',
-            color: '#FFD700',
-            cursor: 'pointer',
-            fontSize: '24px'
-          }}
         >
           Logout
         </button>

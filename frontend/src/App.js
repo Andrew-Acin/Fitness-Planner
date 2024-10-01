@@ -5,6 +5,7 @@ import Home from './pages/Home';  // Import the Home component
 import Login from './components/LogIn';
 import Signup from './components/SignUp';
 import Calendar from './pages/Calendar';
+import './App.css'
 
 function App() {
   return (

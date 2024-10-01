@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar'; // npm install react-calendar if you haven't already
-import './ExcerciseStyles.css';
 import axios from 'axios';
 
 const WorkoutCalendar = () => {
