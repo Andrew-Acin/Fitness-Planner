@@ -58,12 +58,24 @@ const SearchExercises = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/exercises', {
+      const workoutData = {
+        name: 'My New Workout', // You can collect this dynamically if needed
+        type: 'strength', // Adjust accordingly
+        muscle: 'biceps',
+        equipment: 'dumbbells',
+        difficulty: 'medium',
+        instructions: 'Follow the routine as described.', // Customize as needed
+        exercises: selectedExercises.map(ex => ({ id: ex.id })) // Only send the IDs
+    };
+
+
+
+      const response = await fetch('http://localhost:5000/api/workouts', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ exercises: selectedExercises }),
+        body: JSON.stringify(workoutData),
       });
 
       if (!response.ok) {
