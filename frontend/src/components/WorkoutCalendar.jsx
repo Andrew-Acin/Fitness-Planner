@@ -10,7 +10,7 @@ const WorkoutCalendar = () => {
   const [newWorkout, setNewWorkout] = useState({ name: '', description: '', scheduled_time: '' }); // State for new workout form
   const [error, setError] = useState(null); // Error state
 
-  const apiKey = process.env.API_NINJAS_KEY;
+  const apiKey = process.env.REACT_APP_API_KEY;
 
 
   useEffect(() => {
