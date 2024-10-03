@@ -18,10 +18,12 @@ const SearchExercises = () => {
   const searchExercises = async () => {
     if (query.trim()) {
       try {
+        console.log('apiKey', apiKey)
+        console.log(process.env)
         const response = await fetch(`https://api.api-ninjas.com/v1/exercises?muscle=${query}`, {
           method: 'GET',
           headers: {
-            'X-Api-Key': apiKey,
+            'x-api-key': process.env.REACT_APP_API_KEY,
             'Content-Type': 'application/json',
           },
         });
