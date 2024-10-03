@@ -26,12 +26,10 @@ module.exports = {
         onDelete: 'CASCADE',
       },
       start_time: {
-        type: Sequelize.TIME,
-        allowNull: false
+        type: Sequelize.TIME
       },
       end_time: {
-        type: Sequelize.TIME,
-        allowNull: false
+        type: Sequelize.TIME
       }
     });
   },

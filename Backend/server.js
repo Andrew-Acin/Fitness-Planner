@@ -6,6 +6,7 @@ const { Sequelize } = require('sequelize');
 require('dotenv').config(); // Load environment variables from .env
 const { Workout, Exercise, WorkoutOnExercise } = require('./models');
 
+
 // Connect to database using environment variables
 const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD, {
   host: process.env.DB_HOST,
@@ -44,24 +45,72 @@ app.get('/api/exercise', async (req, res) => {
   }
 
   try {
-    const response = await fetch(apiUrl, {
-      method: 'GET',
-      headers: {
-        'X-Api-Key': apiKey
-      }
-    });
+    // First, try to fetch exercises from the database
+    let exercises = await Exercise.findAll({ where: { muscle } });
 
-    if (!response.ok) {
-      throw new Error(`Error fetching exercises: ${response.statusText}`);
+    // If no exercises are found in the database, fetch from API
+    if (exercises.length === 0) {
+      console.log(`No exercises found for muscle: ${muscle}. Fetching from API...`);
+      
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        headers: {
+          'X-Api-Key': apiKey,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error fetching exercises from API: ${response.statusText}`);
+      }
+
+      const apiData = await response.json();
+
+      // Optionally, store fetched exercises in the database for future use
+      exercises = await Promise.all(apiData.map(async (ex) => {
+        const newExercise = await Exercise.create({
+          name: ex.name,
+          type: ex.type,
+          muscle: ex.muscle,
+          equipment: ex.equipment,
+          difficulty: ex.difficulty,
+          instructions: ex.instructions,
+        });
+        return newExercise;
+      }));
     }
 
-    const data = await response.json();
-    res.json(data);
+    // Return exercises (either from database or API)
+    res.json(exercises);
   } catch (error) {
     console.error('Error fetching exercise:', error);
     res.status(500).json({ error: 'Unable to fetch data' });
   }
 });
+
+
+app.post('/api/exercise', async (req, res) => {
+  const {name, type, muscle, equipment, difficulty, instructions} = req.body;
+
+  if (!name || !type || !muscle || !equipment || !difficulty || !instructions) {
+  return res.status(400).json({ error: 'All fields are required' });
+  }
+
+  try {
+    const newExercise = await Exercise.create({
+      name,
+      type,
+      muscle,
+      equipment,
+      difficulty,
+      instructions,
+    })
+
+    res.status(201).json(newExercise);
+  } catch (error) {
+    console.error('Error saving exercise', error);
+    res.status(500).json({ error: 'Failed to save the exercise'})
+  }
+})
 
 // API Routes for workout creation
 app.post('/api/workouts', async (req, res) => {
@@ -106,10 +155,21 @@ app.post('/api/workouts', async (req, res) => {
       }
     }
 
-    res.status(201).json({ message: 'Workout and exercises saved successfully' });
+    res.status(201).json(newWorkout);
   } catch (error) {
-    console.error('Error saving workout and exercises:', error);
-    res.status(500).json({ error: 'Failed to save workout and exercises' });
+    console.error(error);
+    res.status(500).json({ error: 'Failed to create workout with exercises' });
+  }
+});
+
+// API Route to fetch all workouts
+app.get('/api/workouts', async (req, res) => {
+  try {
+    const workouts = await Workout.findAll(); // Fetch all workouts from the database
+    res.status(200).json(workouts); // Send the workouts as JSON
+  } catch (error) {
+    console.error('Error fetching workouts:', error);
+    res.status(500).json({ error: 'Failed to fetch workouts' });
   }
 });
 
