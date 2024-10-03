@@ -12,9 +12,8 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
+      workout_name: {
         type: Sequelize.STRING,
-        allowNull: false
       },
       created_by: {
         type: Sequelize.INTEGER,
@@ -26,24 +25,12 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      type: {
-        type: Sequelize.STRING,
+      start_time: {
+        type: Sequelize.TIME,
         allowNull: false
       },
-      muscle: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      equipment: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      difficulty: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      instructions: {
-        type: Sequelize.TEXT,
+      end_time: {
+        type: Sequelize.TIME,
         allowNull: false
       }
     });
