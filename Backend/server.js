@@ -24,56 +24,87 @@ sequelize.authenticate()
     console.error('Unable to connect to the database:', err);
   });
 
-// API Ninjas fecth requests frpm here to frontend SearchExercise.js
-app.get('/api/exercise', async(req, res) => {
+// Apply CORS middleware before routes
+app.use(cors({
+    origin: 'http://localhost:3000', 
+    methods: 'GET,POST,PUT,DELETE', 
+}));
+
+// Body Parser Middleware
+app.use(bodyParser.json()); 
+
+// API Ninjas fetch requests from here to frontend SearchExercise.js
+app.get('/api/exercise', async (req, res) => {
+  const muscle = req.query.muscle; // Extract muscle from the query string
   const apiKey = process.env.API_NINJAS_KEY;
-  const apiUrl = 'https://api.api-ninjas.com/v1/exercises?muscle' + muscle;
+  const apiUrl = `https://api.api-ninjas.com/v1/exercises?muscle=${muscle}`;
+
+  if (!muscle) {
+    return res.status(400).json({ error: 'Muscle parameter is required' });
+  }
 
   try {
     const response = await fetch(apiUrl, {
       method: 'GET',
-      headers: 'X-Api-Key: apiKey'
-      
+      headers: {
+        'X-Api-Key': apiKey
+      }
     });
 
-    const data = await response.json()
-    res.json(data)
+    if (!response.ok) {
+      throw new Error(`Error fetching exercises: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    res.json(data);
   } catch (error) {
-    console.error('Error fetching exercise:', error)
-    res.status(500).json({ error: 'Unable to fetch data'})
+    console.error('Error fetching exercise:', error);
+    res.status(500).json({ error: 'Unable to fetch data' });
   }
-})
+});
 
-app.use(bodyParser.json()); 
-
-app.post('/api/Workouts', async (req, res) => {
-  const { name, type, muscle, equipment, difficulty, instructions, exercises } = req.body;
+// API Routes for workout creation
+app.post('/api/workouts', async (req, res) => {
+  const { name, type, exercises } = req.body;
 
   try {
     // Create a new workout
     const newWorkout = await Workout.create({
       name,
       type,
-      muscle,
-      equipment,
-      difficulty,
-      instructions,
-      created_by: 1 // Use the logged-in user's ID in a real app
+      created_by: 1 // Replace with actual user ID in a real app
     });
 
-    // Link the selected exercises to the new workout
+    // Ensure that exercises array is not empty
     if (exercises && exercises.length > 0) {
-  const workoutExerciseLinks = exercises
-    .map(ex => ({
-      workout_id: newWorkout.id,
-      exercise_id: ex.id  
-    }));
+      for (const ex of exercises) {
+        let exercise = await Exercise.findOne({
+          where: {
+            name: ex.name,
+            type: ex.type,
+            muscle: ex.muscle,
+            equipment: ex.equipment,
+            difficulty: ex.difficulty,
+          },
+        });
 
-  if (workoutExerciseLinks.length > 0) {
-    await WorkoutOnExercise.bulkCreate(workoutExerciseLinks); 
-  }
-}
+        if (!exercise) {
+          exercise = await Exercise.create({
+            name: ex.name,      
+            type: ex.type,
+            muscle: ex.muscle,
+            equipment: ex.equipment,
+            difficulty: ex.difficulty,
+          });
+        }
 
+        // Link the exercise to the workout
+        await WorkoutOnExercise.create({
+          workout_id: newWorkout.id,
+          exercise_id: exercise.id,
+        });
+      }
+    }
 
     res.status(201).json({ message: 'Workout and exercises saved successfully' });
   } catch (error) {
@@ -81,13 +112,6 @@ app.post('/api/Workouts', async (req, res) => {
     res.status(500).json({ error: 'Failed to save workout and exercises' });
   }
 });
-
-
-// Apply CORS middleware before routes
-app.use(cors());
-
-// Body Parser Middleware
-app.use(bodyParser.json());
 
 // API Routes for login and signup
 app.use('/api/auth', authRoutes);

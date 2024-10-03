@@ -1,17 +1,11 @@
 'use strict';
-const { Model } = require('sequelize');
+const { Model, TIME } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class Workout extends Model {
     static associate(models) {
       // Define association to User model
       Workout.belongsTo(models.User, { foreignKey: 'created_by' });
-
-      Workout.belongsToMany(models.Exercise, {
-        through: 'WorkoutExercises', // This table will store workout-exercise relations
-        foreignKey: 'workoutId',
-        otherKey: 'exerciseId'
-    });
     }
   }
 
@@ -21,9 +15,8 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true
     },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false
+    workout_name: {
+      type:DataTypes.STRING
     },
     created_by: {
       type: DataTypes.INTEGER,
@@ -32,27 +25,15 @@ module.exports = (sequelize, DataTypes) => {
         model: 'users', // Name of the referenced model (users)
         key: 'id', // Key in the referenced model
       }
-    },
-    type: {
-      type: DataTypes.STRING,
+    }, 
+    start_time: {
+      type: Sequelize.TIME,
       allowNull: false
     },
-    muscle: {
-      type: DataTypes.STRING,
+    end_time: {
+      type: Sequelize.TIME,
       allowNull: false
-    },
-    equipment: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    difficulty: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    instructions: {
-      type: DataTypes.TEXT,
-      allowNull: false
-    },
+    }
   }, {
     sequelize,
     modelName: 'Workout',
