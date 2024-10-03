@@ -10,8 +10,7 @@ const WorkoutCalendar = () => {
   const [newWorkout, setNewWorkout] = useState({ name: '', description: '', scheduled_time: '' }); // State for new workout form
   const [error, setError] = useState(null); // Error state
 
-  const apiKey = process.env.REACT_APP_API_KEY;
-
+  const apiKey = process.env.REACT_APP_API_KEY; // Get API key from environment variables
 
   useEffect(() => {
     // Fetch existing workouts from the server
@@ -158,4 +157,3 @@ const WorkoutCalendar = () => {
 };
 
 export default WorkoutCalendar;
-
