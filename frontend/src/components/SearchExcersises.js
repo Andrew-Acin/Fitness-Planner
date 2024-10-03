@@ -7,7 +7,8 @@ const SearchExercises = () => {
   const [selectedExercises, setSelectedExercises] = useState([]); // State to track selected exercises
   const [error, setError] = useState(null); // State to track errors
 
-
+  const apiKey = process.env.API_NINJAS_KEY;
+  
   // Function to handle the search input change
   const handleInputChange = (e) => {
     setQuery(e.target.value);
