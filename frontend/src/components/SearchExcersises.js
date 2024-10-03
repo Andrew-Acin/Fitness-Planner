@@ -60,12 +60,20 @@ const SearchExercises = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/exercises', {
+      const response = await fetch('http://localhost:5000/api/exercise', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ exercises: selectedExercises }),
+        body: JSON.stringify({ //I managed to use the inputs that the API gives us using 
+          name: selectedExercises[0].name, 
+          type: selectedExercises[0].type, 
+          muscle: selectedExercises[0].muscle, 
+          equipment: selectedExercises[0].equipment, 
+          difficulty: selectedExercises[0].difficulty, 
+          instructions: selectedExercises[0].instructions, 
+          exercises: selectedExercises, 
+      }),
       });
 
       if (!response.ok) {
