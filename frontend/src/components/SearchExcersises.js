@@ -7,7 +7,6 @@ const SearchExercises = () => {
   const [selectedExercises, setSelectedExercises] = useState([]); // State to track selected exercises
   const [error, setError] = useState(null); // State to track errors
 
-  const apiKey = 'xFltSpGOWQcYFSylxD6cyg==mPcZ6sJpHZPkTQMr';
 
   // Function to handle the search input change
   const handleInputChange = (e) => {

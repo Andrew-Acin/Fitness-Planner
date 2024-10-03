@@ -10,7 +10,6 @@ const WorkoutCalendar = () => {
   const [newWorkout, setNewWorkout] = useState({ name: '', description: '', scheduled_time: '' }); // State for new workout form
   const [error, setError] = useState(null); // Error state
 
-  const apiKey = 'xFltSpGOWQcYFSylxD6cyg==mPcZ6sJpHZPkTQMr'; // API key
 
   useEffect(() => {
     // Fetch existing workouts from the server
