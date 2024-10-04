@@ -113,15 +113,24 @@ app.post('/api/exercise', async (req, res) => {
 })
 
 // API Routes for workout creation
+// API Routes for workout creation
 app.post('/api/workouts', async (req, res) => {
-  const { name, type, exercises } = req.body;
+  const { name, type, exercises, start_time, end_time, workout_date } = req.body;
 
   try {
+    // Check if start_time and end_time are provided and in the correct format
+    if (!start_time || !end_time || !name) {
+      return res.status(400).json({ error: 'Name, start_time, and end_time are required' });
+    }
+
     // Create a new workout
     const newWorkout = await Workout.create({
       name,
       type,
-      created_by: 1 // Replace with actual user ID in a real app
+      created_by: 1, 
+      start_time: start_time || null,  
+      end_time: end_time || null,      
+      // workout_date: workout_date || null // i added this incase we need to add a date column later
     });
 
     // Ensure that exercises array is not empty
@@ -139,7 +148,7 @@ app.post('/api/workouts', async (req, res) => {
 
         if (!exercise) {
           exercise = await Exercise.create({
-            name: ex.name,      
+            name: ex.name,
             type: ex.type,
             muscle: ex.muscle,
             equipment: ex.equipment,
@@ -161,6 +170,7 @@ app.post('/api/workouts', async (req, res) => {
     res.status(500).json({ error: 'Failed to create workout with exercises' });
   }
 });
+
 
 // API Route to fetch all workouts
 app.get('/api/workouts', async (req, res) => {
