@@ -112,7 +112,7 @@ app.post('/api/exercise', async (req, res) => {
   }
 })
 
-// API Routes for workout creation
+
 // API Routes for workout creation
 app.post('/api/workouts', async (req, res) => {
   const { name, type, exercises, start_time, end_time, workout_date } = req.body;
