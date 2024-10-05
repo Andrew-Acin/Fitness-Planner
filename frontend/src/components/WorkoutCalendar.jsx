@@ -7,7 +7,7 @@ const WorkoutCalendar = () => {
   const [exercises, setExercises] = useState([]); // State for fetched exercises
   const [selectedExercises, setSelectedExercises] = useState([]); // State for selected exercises
   const [workouts, setWorkouts] = useState([]); // State to store workouts for calendar
-  const [newWorkout, setNewWorkout] = useState({ name: '', description: '', scheduled_time: '' }); // State for new workout form
+  const [newWorkout, setNewWorkout] = useState({ name: '', scheduled_time: '' }); // State for new workout form
   const [error, setError] = useState(null); // Error state
 
   const apiKey = process.env.REACT_APP_API_KEY; // Get API key from environment variables
@@ -57,9 +57,12 @@ const WorkoutCalendar = () => {
     e.preventDefault();
     try {
       const newWorkoutData = { ...newWorkout, exercises: selectedExercises };
+
+      console.log('Data being sent to the backend:', newWorkoutData);
+
       await axios.post('http://localhost:5000/api/workouts', newWorkoutData);
       alert('Workout added successfully');
-      setNewWorkout({ name: '', description: '', scheduled_time: '' });
+      setNewWorkout({ name: '', scheduled_time: '' });
       setSelectedExercises([]);
       setWorkouts([...workouts, newWorkoutData]);
     } catch (error) {
@@ -67,6 +70,8 @@ const WorkoutCalendar = () => {
       alert('Failed to save workout');
     }
   };
+
+
 
   return (
     <div className="workout-calendar-container">
@@ -90,12 +95,6 @@ const WorkoutCalendar = () => {
           value={newWorkout.name}
           onChange={(e) => setNewWorkout({ ...newWorkout, name: e.target.value })}
           required
-        />
-        <input
-          type="text"
-          placeholder="Description"
-          value={newWorkout.description}
-          onChange={(e) => setNewWorkout({ ...newWorkout, description: e.target.value })}
         />
         <input
           type="datetime-local"
