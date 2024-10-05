@@ -27,7 +27,7 @@ sequelize.authenticate()
 
 // Apply CORS middleware before routes
 app.use(cors({
-    origin: 'http://localhost:3000', 
+    origin: 'https://fitness-frontend-production-7999.up.railway.app/', 
     methods: 'GET,POST,PUT,DELETE', 
 }));
 
@@ -186,5 +186,5 @@ app.get('/api/workouts', async (req, res) => {
 app.use('/api/auth', authRoutes);
 
 app.listen(port, () => {
-  console.log(`Backend server running on fitness-backend-production-d337.up.railway.app:${port}`);
+  console.log(`Backend server running on https://fitness-backend-production-d337.up.railway.app:${port}`);
 });
