@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true
     },
-    workout_name: {
+    name: {
       type:DataTypes.STRING
     },
     created_by: {
@@ -26,13 +26,9 @@ module.exports = (sequelize, DataTypes) => {
         key: 'id', // Key in the referenced model
       }
     }, 
-    start_time: {
-      type: DataTypes.TIME,
-      allowNull: false
-    },
-    end_time: {
-      type: DataTypes.TIME,
-      allowNull: false
+    scheduled_time: {
+      type: DataTypes.DATE, // Sequelize DATE type to store date and time
+      allowNull: false,
     }
   }, {
     sequelize,
