@@ -1,23 +1,23 @@
 {
   "development": {
     "username": "postgres",
-    "password": "Td15&lop",
+    "password": "upyUgKCUPzuujEVqZGyexksbrpVtevcd",
     "database": "fitness-planner",
-    "host": "127.0.0.1",
+    "host": "postgres.railway.internal",
     "dialect": "postgres"
   },
   "test": {
     "username": "postgres",
-    "password": "HEAC63",
+    "password": "upyUgKCUPzuujEVqZGyexksbrpVtevcd",
     "database": "fitness-planner",
-    "host": "127.0.0.1",
+    "host": "postgres.railway.internal",
     "dialect": "postgres"
   },
   "production": {
     "username": "postgres",
-    "password": "HEAC63",
+    "password": "upyUgKCUPzuujEVqZGyexksbrpVtevcd",
     "database": "fitness-planner",
-    "host": "127.0.0.1",
+    "host": "postgres.railway.internal",
     "dialect": "postgres"
   }
 }
