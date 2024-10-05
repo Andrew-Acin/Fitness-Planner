@@ -115,22 +115,21 @@ app.post('/api/exercise', async (req, res) => {
 
 // API Routes for workout creation
 app.post('/api/workouts', async (req, res) => {
-  const { name, type, exercises, start_time, end_time, workout_date } = req.body;
+  const { name, exercises, scheduled_time } = req.body;
+
+  console.log('Data received from frontend:', req.body);
 
   try {
     // Check if start_time and end_time are provided and in the correct format
-    if (!start_time || !end_time || !name) {
+    if (!name || !scheduled_time) {
       return res.status(400).json({ error: 'Name, start_time, and end_time are required' });
     }
 
     // Create a new workout
     const newWorkout = await Workout.create({
       name,
-      type,
       created_by: 1, 
-      start_time: start_time || null,  
-      end_time: end_time || null,      
-      // workout_date: workout_date || null // i added this incase we need to add a date column later
+      scheduled_time: new Date(scheduled_time)
     });
 
     // Ensure that exercises array is not empty

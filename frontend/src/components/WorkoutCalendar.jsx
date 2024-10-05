@@ -7,7 +7,7 @@ const WorkoutCalendar = () => {
   const [exercises, setExercises] = useState([]); // State for fetched exercises
   const [selectedExercises, setSelectedExercises] = useState([]); // State for selected exercises
   const [workouts, setWorkouts] = useState([]); // State to store workouts for calendar
-  const [newWorkout, setNewWorkout] = useState({ name: '', start_time: '', end_time: '' }); // State for new workout form
+  const [newWorkout, setNewWorkout] = useState({ name: '', scheduled_time: '' }); // State for new workout form
   const [error, setError] = useState(null); // Error state
 
   const apiKey = process.env.REACT_APP_API_KEY; // Get API key from environment variables
@@ -57,20 +57,20 @@ const WorkoutCalendar = () => {
     e.preventDefault();
     try {
       const newWorkoutData = { ...newWorkout, exercises: selectedExercises };
-      const response = await axios.post('http://localhost:5000/api/workouts', newWorkoutData);
-      
-      // Update the workouts state with the newly created workout
-      const addedWorkout = response.data; // assuming the API returns the added workout data
-      setWorkouts((prevWorkouts) => [...prevWorkouts, addedWorkout]);
 
+      console.log('Data being sent to the backend:', newWorkoutData);
+
+      await axios.post('http://localhost:5000/api/workouts', newWorkoutData);
       alert('Workout added successfully');
-      setNewWorkout({ name: '', start_time: '', end_time: '' });
+      setNewWorkout({ name: '', scheduled_time: '' });
       setSelectedExercises([]);
     } catch (error) {
       console.error('Error saving workout:', error);
       alert('Failed to save workout');
     }
   };
+
+
 
   return (
     <div className="workout-calendar-container">
@@ -93,12 +93,6 @@ const WorkoutCalendar = () => {
           placeholder="Workout Name"
           value={newWorkout.name}
           onChange={(e) => setNewWorkout({ ...newWorkout, name: e.target.value })}
-          required
-        />
-        <input
-          type="datetime-local"
-          value={newWorkout.start_time}
-          onChange={(e) => setNewWorkout({ ...newWorkout, start_time: e.target.value })}
           required
         />
         <input
