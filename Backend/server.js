@@ -186,5 +186,5 @@ app.get('/api/workouts', async (req, res) => {
 app.use('/api/auth', authRoutes);
 
 app.listen(port, () => {
-  console.log(`Backend server running on http://localhost:${port}`);
+  console.log(`Backend server running on fitness-backend-production-d337.up.railway.app:${port}`);
 });
