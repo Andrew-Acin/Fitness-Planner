@@ -18,8 +18,8 @@ function Home() {
 
   return ( 
     <div>
-      <Navbar/>
-      <SearchExcersises/>
+      {/* <Navbar/>
+      <SearchExcersises/> */}
 
       {/* Conditional rendering for welcome message */}
       <h1>{isLoggedIn ? `Welcome ${firstName}` : 'Welcome to the Fitness Planner App'}</h1>

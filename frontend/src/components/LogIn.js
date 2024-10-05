@@ -21,7 +21,7 @@ const Login = () => {
         localStorage.setItem('first_name', data.first_name); // Store the first name from response
         // Redirect user or update UI after successful login
         alert('Login successful!');
-        window.location.href = '/'; 
+        window.location.href = '/calendar'; 
       } else {
         const errorData = await response.json();
         console.error('Error:', errorData.message);
