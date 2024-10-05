@@ -27,7 +27,7 @@ sequelize.authenticate()
 
 // Apply CORS middleware before routes
 app.use(cors({
-    origin: 'https://fitness-frontend-production-7999.up.railway.app/', 
+    origin: 'https://fitness-frontend-production-7999.up.railway.app', 
     methods: 'GET,POST,PUT,DELETE', 
 }));
 
