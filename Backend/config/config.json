@@ -3,21 +3,21 @@
     "username": "postgres",
     "password": "upyUgKCUPzuujEVqZGyexksbrpVtevcd",
     "database": "fitness-planner",
-    "host": "postgres.railway.internal",
+    "host": "junction.proxy.rlwy.net",
     "dialect": "postgres"
   },
   "test": {
     "username": "postgres",
     "password": "upyUgKCUPzuujEVqZGyexksbrpVtevcd",
     "database": "fitness-planner",
-    "host": "postgres.railway.internal",
+    "host": "junction.proxy.rlwy.net",
     "dialect": "postgres"
   },
   "production": {
     "username": "postgres",
     "password": "upyUgKCUPzuujEVqZGyexksbrpVtevcd",
     "database": "fitness-planner",
-    "host": "postgres.railway.internal",
+    "host": "junction.proxy.rlwy.net",
     "dialect": "postgres"
   }
 }
