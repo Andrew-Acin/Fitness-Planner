@@ -60,7 +60,7 @@ const SearchExercises = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/exercise', {
+      const response = await fetch('fitness-backend-production-d337.up.railway.app/api/exercise', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
