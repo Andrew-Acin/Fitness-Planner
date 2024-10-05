@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Navbar from '../components/Navbar';
-import SearchExcersises from '../components/SearchExcersises';
+// import Navbar from '../components/Navbar';
+// import SearchExcersises from '../components/SearchExcersises';
 // import './Home.css';  // Import the CSS file
 
 function Home() {
