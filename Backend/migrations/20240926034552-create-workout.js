@@ -12,7 +12,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      workout_name: {
+      name: {
         type: Sequelize.STRING,
       },
       created_by: {
@@ -25,12 +25,10 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      start_time: {
-        type: Sequelize.TIME
-      },
-      end_time: {
-        type: Sequelize.TIME
-      }
+      scheduled_time: {
+        type: Sequelize.DATE, // Sequelize DATE type to store date and time
+        allowNull: false,
+    }
     });
   },
   async down(queryInterface, Sequelize) {
