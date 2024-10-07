@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Navbar from '../components/Navbar';
-import SearchExcersises from '../components/SearchExcersises';
+// import Navbar from '../components/Navbar';
+// import SearchExcersises from '../components/SearchExcersises';
 // import './Home.css';  // Import the CSS file
 
 function Home() {
@@ -18,8 +18,8 @@ function Home() {
 
   return ( 
     <div>
-      <Navbar/>
-      <SearchExcersises/>
+      {/* <Navbar/>
+      <SearchExcersises/> */}
 
       {/* Conditional rendering for welcome message */}
       <h1>{isLoggedIn ? `Welcome ${firstName}` : 'Welcome to the Fitness Planner App'}</h1>

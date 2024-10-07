@@ -7,7 +7,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
+      const response = await fetch('https://fitness-backend-production-d337.up.railway.app/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -21,7 +21,7 @@ const Login = () => {
         localStorage.setItem('first_name', data.first_name); // Store the first name from response
         // Redirect user or update UI after successful login
         alert('Login successful!');
-        window.location.href = '/'; 
+        window.location.href = '/calendar'; 
       } else {
         const errorData = await response.json();
         console.error('Error:', errorData.message);
