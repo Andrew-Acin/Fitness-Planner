@@ -28,7 +28,8 @@ sequelize.authenticate()
 // Apply CORS middleware before routes
 app.use(cors({
     origin: 'fitness-planner-frontend-production.up.railway.app', 
-    methods: 'GET,POST,PUT,DELETE', 
+    methods: ['GET','POST','PUT','DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'] 
 }));
 
 // Body Parser Middleware
